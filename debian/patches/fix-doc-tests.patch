@@ -1,0 +1,65 @@
+Description: fix doctests
+Author: Andreas Hasenack <andreas@canonical.com>
+Bug-Ubuntu: https://bugs.launchpad.net/ubuntu/+source/python-tempita/+bug/1966532
+Forwarded: no, upstream seems to have ceased development
+Last-Update: 2022-03-25
+--- a/tempita/__init__.py
++++ b/tempita/__init__.py
+@@ -644,15 +644,15 @@
+         >>> lex('hey {{')
+         Traceback (most recent call last):
+             ...
+-        TemplateError: No }} to finish last expression at line 1 column 7
++        tempita.TemplateError: No }} to finish last expression at line 1 column 7
+         >>> lex('hey }}')
+         Traceback (most recent call last):
+             ...
+-        TemplateError: }} outside expression at line 1 column 7
++        tempita.TemplateError: }} outside expression at line 1 column 7
+         >>> lex('hey {{ {{')
+         Traceback (most recent call last):
+             ...
+-        TemplateError: {{ inside expression at line 1 column 10
++        tempita.TemplateError: {{ inside expression at line 1 column 10
+ 
+     """
+     if delimiters is None:
+@@ -790,31 +790,31 @@
+         >>> parse('{{continue}}')
+         Traceback (most recent call last):
+             ...
+-        TemplateError: continue outside of for loop at line 1 column 3
++        tempita.TemplateError: continue outside of for loop at line 1 column 3
+         >>> parse('{{if x}}foo')
+         Traceback (most recent call last):
+             ...
+-        TemplateError: No {{endif}} at line 1 column 3
++        tempita.TemplateError: No {{endif}} at line 1 column 3
+         >>> parse('{{else}}')
+         Traceback (most recent call last):
+             ...
+-        TemplateError: else outside of an if block at line 1 column 3
++        tempita.TemplateError: else outside of an if block at line 1 column 3
+         >>> parse('{{if x}}{{for x in y}}{{endif}}{{endfor}}')
+         Traceback (most recent call last):
+             ...
+-        TemplateError: Unexpected endif at line 1 column 25
++        tempita.TemplateError: Unexpected endif at line 1 column 25
+         >>> parse('{{if}}{{endif}}')
+         Traceback (most recent call last):
+             ...
+-        TemplateError: if with no expression at line 1 column 3
++        tempita.TemplateError: if with no expression at line 1 column 3
+         >>> parse('{{for x y}}{{endfor}}')
+         Traceback (most recent call last):
+             ...
+-        TemplateError: Bad for (no "in") in 'x y' at line 1 column 3
++        tempita.TemplateError: Bad for (no "in") in 'x y' at line 1 column 3
+         >>> parse('{{py:x=1\ny=2}}')
+         Traceback (most recent call last):
+             ...
+-        TemplateError: Multi-line py blocks must start with a newline at line 1 column 3
++        tempita.TemplateError: Multi-line py blocks must start with a newline at line 1 column 3
+     """
+     if delimiters is None:
+         delimiters = ( Template.default_namespace['start_braces'],
